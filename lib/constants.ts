@@ -25,4 +25,3 @@ export const NAV = [
   { label: "Contact", href: "/contact" },
 ];
 
-export const PLACEHOLDER = "Content to be supplied by MDM Windows & Doors.";

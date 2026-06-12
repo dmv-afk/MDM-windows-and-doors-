@@ -19,7 +19,7 @@ export default function Process() {
               <li className="h-full p-8 md:p-10">
                 <span className="font-display text-4xl text-bronze/70">{s.n}</span>
                 <h3 className="mt-5 font-display text-xl">{s.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-white/60">{s.body}</p>
+                <p className="mt-3 text-sm leading-relaxed text-white/75">{s.body}</p>
               </li>
             </Reveal>
           ))}

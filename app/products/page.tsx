@@ -6,7 +6,6 @@ import WindowConfigurator from "@/components/configurator/WindowConfigurator";
 import RevealImage from "@/components/ui/RevealImage";
 import Reveal from "@/components/ui/Reveal";
 import CTABand from "@/components/home/CTABand";
-import { PLACEHOLDER } from "@/lib/constants";
 
 export const metadata: Metadata = buildMetadata({
   title: "Idealcombi Products — Futura+ Windows & Doors",
@@ -36,14 +35,13 @@ export default function ProductsPage() {
           <Reveal delay={0.15}>
             <p className="eyebrow">Interactive showcase</p>
             <h2 className="display mt-4 text-3xl md:text-4xl">Turn it. Open it. Look closer.</h2>
-            <p className="mt-5 text-white/65 leading-relaxed">
+            <p className="mt-5 text-white/80 leading-relaxed">
               Drag to rotate the window, switch frame colours, and open the sash to see how it moves.
             </p>
-            <ul className="mt-8 space-y-3 text-sm text-white/65">
+            <ul className="mt-8 space-y-3 text-sm text-white/80">
               <li className="flex gap-3"><span className="text-bronze">—</span> Slim frame, maximised glass area</li>
               <li className="flex gap-3"><span className="text-bronze">—</span> Opening sash demonstration</li>
               <li className="flex gap-3"><span className="text-bronze">—</span> Frame colour options</li>
-              <li className="flex gap-3 italic text-white/40"><span className="text-bronze not-italic">—</span> Full technical specification — {PLACEHOLDER}</li>
             </ul>
           </Reveal>
         </div>

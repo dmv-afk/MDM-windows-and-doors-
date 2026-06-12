@@ -5,7 +5,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { GALLERY } from "@/content/gallery";
 import Lightbox from "./Lightbox";
-import { PLACEHOLDER } from "@/lib/constants";
 
 /** Masonry gallery (CSS columns) with lazy loading and full-screen lightbox. */
 export default function MasonryGrid() {
@@ -38,12 +37,6 @@ export default function MasonryGrid() {
           </motion.button>
         ))}
 
-        {/* Placeholder slots for additional photography */}
-        {[1, 2].map((n) => (
-          <div key={n} className="mb-5 flex aspect-[4/3] items-center justify-center border border-dashed border-line p-8 text-center">
-            <p className="text-xs italic text-white/35">Additional project photo — {PLACEHOLDER}</p>
-          </div>
-        ))}
       </div>
 
       <Lightbox images={GALLERY} index={active} onClose={() => setActive(null)} onNavigate={setActive} />

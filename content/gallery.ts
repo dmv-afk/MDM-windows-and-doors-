@@ -22,6 +22,11 @@ export const GALLERY: GalleryImage[] = [
     w: 2000, h: 1500, tag: "Glazed Screens",
   },
   {
+    src: "/images/projects/window-replacement-renovation.jpg",
+    alt: "House renovation with new anthracite Idealcombi windows being installed",
+    w: 2000, h: 1500, tag: "Replacement",
+  },
+  {
     src: "/images/projects/icf-build-in-progress.jpg",
     alt: "Idealcombi windows installed during an ICF build",
     w: 960, h: 1280, tag: "In Progress",

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CONTACT, NAV, SITE, PLACEHOLDER } from "@/lib/constants";
+import { CONTACT, NAV, SITE } from "@/lib/constants";
 
 export default function Footer() {
   return (
@@ -9,7 +9,7 @@ export default function Footer() {
           <div>
             <p className="font-display text-2xl">MDM</p>
             <p className="eyebrow mt-1">Windows &amp; Doors</p>
-            <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/60">
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/75">
               Premium Idealcombi windows and doors, professionally installed across {SITE.area}.
             </p>
           </div>
@@ -45,9 +45,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-2 border-t border-line pt-6 text-xs text-white/40 md:flex-row md:items-center md:justify-between">
+        <div className="mt-14 border-t border-line pt-6 text-xs text-white/55">
           <p>© {new Date().getFullYear()} {SITE.name}. All rights reserved.</p>
-          <p>Registered business details — {PLACEHOLDER}</p>
         </div>
       </div>
     </footer>

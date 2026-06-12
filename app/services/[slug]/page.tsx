@@ -37,12 +37,12 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
           <Reveal>
             <p className="eyebrow">Service</p>
             <h1 className="display mt-4 text-4xl md:text-6xl">{s.title}</h1>
-            <p className="mt-6 max-w-xl text-base md:text-lg leading-relaxed text-white/65">{s.intro}</p>
+            <p className="mt-6 max-w-xl text-base md:text-lg leading-relaxed text-white/80">{s.intro}</p>
             <ul className="mt-9 space-y-3.5 text-sm text-white/70">
               {s.bullets.map((b) => (
                 <li key={b} className="flex gap-3">
                   <span className="mt-px text-bronze">—</span>
-                  <span className={b.includes("Content to be supplied") ? "italic text-white/40" : ""}>{b}</span>
+                  <span>{b}</span>
                 </li>
               ))}
             </ul>
@@ -71,7 +71,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
                   <Image src={o.image} alt="" fill sizes="33vw" className="object-cover" />
                 </div>
                 <h3 className="relative font-display text-xl">{o.title}</h3>
-                <p className="relative mt-2 text-sm text-white/55">{o.short}</p>
+                <p className="relative mt-2 text-sm text-white/75">{o.short}</p>
               </Link>
             ))}
           </div>

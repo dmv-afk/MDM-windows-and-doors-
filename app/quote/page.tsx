@@ -27,10 +27,10 @@ export default function QuotePage() {
             <a href={CONTACT.phoneHref} className="block font-display text-2xl hover:text-bronze transition-colors">
               {CONTACT.phoneDisplay}
             </a>
-            <a href={CONTACT.whatsappHref} target="_blank" rel="noopener noreferrer" className="block text-white/70 hover:text-bronze transition-colors">
+            <a href={CONTACT.whatsappHref} target="_blank" rel="noopener noreferrer" className="block text-white/80 hover:text-bronze transition-colors">
               Message us on WhatsApp
             </a>
-            <a href={CONTACT.emailHref} className="block text-white/70 hover:text-bronze transition-colors">
+            <a href={CONTACT.emailHref} className="block text-white/80 hover:text-bronze transition-colors">
               {CONTACT.email}
             </a>
           </div>

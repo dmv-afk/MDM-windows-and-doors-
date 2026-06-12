@@ -2,7 +2,6 @@ import Image from "next/image";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
 import Button from "@/components/ui/Button";
-import { PLACEHOLDER } from "@/lib/constants";
 
 export default function ProductTeaser() {
   return (
@@ -14,11 +13,10 @@ export default function ProductTeaser() {
             title="Danish engineering. Irish homes."
             intro="Idealcombi is a premium European window and door manufacturer. We install Idealcombi products — including the Futura+ range — because of their quality, energy efficiency, durability, and contemporary design."
           />
-          <ul className="mt-8 space-y-3 text-sm text-white/65">
+          <ul className="mt-8 space-y-3 text-sm text-white/80">
             <li className="flex gap-3"><span className="text-bronze">—</span> High-quality Danish-manufactured window systems</li>
             <li className="flex gap-3"><span className="text-bronze">—</span> Slim frames, large glass areas</li>
             <li className="flex gap-3"><span className="text-bronze">—</span> Triple glazing options available</li>
-            <li className="flex gap-3 italic text-white/40"><span className="text-bronze not-italic">—</span> Detailed specifications — {PLACEHOLDER}</li>
           </ul>
           <div className="mt-10 flex gap-4">
             <Button href="/products">Explore the range</Button>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
-import { CONTACT, SITE, PLACEHOLDER } from "@/lib/constants";
+import { CONTACT, SITE } from "@/lib/constants";
 
 export const metadata: Metadata = buildMetadata({
   title: "Privacy Policy",
@@ -10,19 +10,17 @@ export const metadata: Metadata = buildMetadata({
 
 export default function PrivacyPage() {
   return (
-    <section className="pt-32 md:pt-44 pb-28">
+    <section className="pt-28 md:pt-40 pb-28">
       <div className="mx-auto max-w-3xl px-5 md:px-8">
         <p className="eyebrow">Legal</p>
         <h1 className="display mt-4 text-4xl md:text-5xl">Privacy Policy</h1>
-        <p className="mt-3 text-xs text-white/40">This template must be reviewed and completed before launch. {PLACEHOLDER}</p>
 
-        <div className="mt-12 space-y-10 text-sm leading-relaxed text-white/70">
+        <div className="mt-12 space-y-10 text-sm md:text-base leading-relaxed text-white/80">
           <div>
             <h2 className="font-display text-xl text-white">Who we are</h2>
             <p className="mt-3">
               {SITE.name}, serving {SITE.area}. Contact: {CONTACT.email} / {CONTACT.phoneDisplay}.
             </p>
-            <p className="mt-2 italic text-white/40">Registered business name, number and address — {PLACEHOLDER}</p>
           </div>
           <div>
             <h2 className="font-display text-xl text-white">What we collect and why</h2>
@@ -42,7 +40,10 @@ export default function PrivacyPage() {
           </div>
           <div>
             <h2 className="font-display text-xl text-white">Retention</h2>
-            <p className="mt-3 italic text-white/40">Retention period — {PLACEHOLDER}</p>
+            <p className="mt-3">
+              We keep enquiry details only for as long as needed to handle your enquiry and any work that
+              follows from it. You can ask us to delete your details at any time.
+            </p>
           </div>
           <div>
             <h2 className="font-display text-xl text-white">Your rights</h2>
@@ -54,10 +55,7 @@ export default function PrivacyPage() {
           </div>
           <div>
             <h2 className="font-display text-xl text-white">Cookies</h2>
-            <p className="mt-3">
-              This website does not set marketing or analytics cookies by default.
-              <span className="italic text-white/40"> If analytics are added later, this section must be updated — {PLACEHOLDER}</span>
-            </p>
+            <p className="mt-3">This website does not set marketing or analytics cookies.</p>
           </div>
         </div>
       </div>

@@ -26,7 +26,7 @@ export default function ServicesPreview() {
                 </div>
                 <div className="relative">
                   <h3 className="font-display text-xl md:text-2xl">{s.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-white/60">{s.short}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-white/75">{s.short}</p>
                   <span className="mt-6 inline-block text-xs uppercase tracking-eyebrow text-bronze opacity-0 -translate-x-2 transition-all duration-400 ease-luxe group-hover:opacity-100 group-hover:translate-x-0">
                     View service →
                   </span>

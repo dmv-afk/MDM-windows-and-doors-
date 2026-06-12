@@ -32,14 +32,14 @@ export default function Header() {
       <header
         className={cn(
           "fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-luxe",
-          scrolled ? "bg-ink/85 backdrop-blur-md border-b border-line" : "bg-transparent"
+          scrolled ? "bg-ink/95 border-b border-line shadow-lg shadow-ink/40" : "bg-ink/90 border-b border-line"
         )}
       >
         <div className="mx-auto flex h-16 md:h-20 max-w-wrap items-center justify-between px-5 md:px-8">
           {/* Wordmark */}
           <Link href="/" className="group flex items-baseline gap-2" aria-label="MDM Windows & Doors — home">
-            <span className="font-display text-xl md:text-2xl tracking-wide">MDM</span>
-            <span className="hidden sm:block text-[11px] uppercase tracking-eyebrow text-white/70 group-hover:text-bronze transition-colors">
+            <span className="font-display text-lg sm:text-xl md:text-2xl tracking-wide">MDM</span>
+            <span className="text-[9px] sm:text-[11px] uppercase tracking-[0.16em] sm:tracking-eyebrow text-white/85 group-hover:text-bronze transition-colors">
               Windows &amp; Doors
             </span>
           </Link>

@@ -3,7 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
 import Button from "@/components/ui/Button";
-import { CONTACT, PLACEHOLDER } from "@/lib/constants";
+import { CONTACT } from "@/lib/constants";
 
 export const metadata: Metadata = buildMetadata({
   title: "Contact",
@@ -39,7 +39,7 @@ export default function ContactPage() {
               >
                 <p className="eyebrow">{c.k}</p>
                 <p className="mt-3 font-display text-xl md:text-2xl group-hover:text-bronze transition-colors break-all">{c.v}</p>
-                <p className="mt-3 text-sm text-white/55">{c.note}</p>
+                <p className="mt-3 text-sm text-white/75">{c.note}</p>
               </a>
             </Reveal>
           ))}
@@ -48,14 +48,11 @@ export default function ContactPage() {
         <Reveal delay={0.2} className="mt-14 flex flex-col items-start gap-6 border border-line p-8 md:p-10 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="font-display text-2xl">Ready for a quotation?</p>
-            <p className="mt-2 text-sm text-white/60">Free and without obligation.</p>
+            <p className="mt-2 text-sm text-white/75">Free and without obligation.</p>
           </div>
           <Button href="/quote" size="lg">Request Free Quote</Button>
         </Reveal>
 
-        <p className="mt-10 text-xs italic text-white/35">
-          Business address and opening hours — {PLACEHOLDER}
-        </p>
       </div>
     </section>
   );

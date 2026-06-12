@@ -147,7 +147,7 @@ export default function Hero() {
               <span className="hero-line mask-line"><span>&amp; Doors Installed</span></span>
               <span className="hero-line mask-line"><span className="text-bronze-soft">With Precision</span></span>
             </h1>
-            <p className="hero-sub mt-6 max-w-xl text-base md:text-lg text-white/70 leading-relaxed">
+            <p className="hero-sub mt-6 max-w-xl text-base md:text-lg text-white/85 leading-relaxed">
               {SITE.description.replace(" Serving Dublin and surrounding areas.", "")}
             </p>
             <div className="hero-ctas mt-9 flex flex-col gap-4 sm:flex-row">

@@ -1,5 +1,4 @@
 import type { Service } from "@/types";
-import { PLACEHOLDER } from "@/lib/constants";
 
 /**
  * Service copy is intentionally factual and claim-free.
@@ -31,7 +30,6 @@ export const SERVICES: Service[] = [
       "Entrance and terrace door systems",
       "Precise alignment for smooth, lasting operation",
       "Weather sealing appropriate to the Irish climate",
-      `Hardware and finish options — ${PLACEHOLDER}`,
     ],
     image: "/images/projects/sliding-screen-barn.jpg",
     imageAlt: "Black-framed glazed screen and door installed in a white rendered home",
@@ -61,7 +59,6 @@ export const SERVICES: Service[] = [
       "Triple glazed Idealcombi units",
       "Suited to new builds and upgrades",
       "Helps reduce heat loss through glazing",
-      `Performance specifications — ${PLACEHOLDER}`,
     ],
     image: "/images/projects/corner-glazing-stone-extension.jpg",
     imageAlt: "Corner glazing on a stone-clad extension",
@@ -78,8 +75,8 @@ export const SERVICES: Service[] = [
       "Draught-proof sealing and finishing",
       "Tidy, respectful working in occupied homes",
     ],
-    image: "/images/projects/icf-build-in-progress.jpg",
-    imageAlt: "Energy-efficient windows installed during an ICF construction project",
+    image: "/images/projects/window-replacement-renovation.jpg",
+    imageAlt: "Home renovation with new anthracite Idealcombi windows replacing older units",
   },
   {
     slug: "residential",
@@ -105,7 +102,6 @@ export const SERVICES: Service[] = [
     bullets: [
       "Commercial window and door packages",
       "Programme-aware site working",
-      `Recent commercial projects — ${PLACEHOLDER}`,
     ],
     image: "/images/projects/sliding-screen-barn.jpg",
     imageAlt: "Large glazed screen installation",
