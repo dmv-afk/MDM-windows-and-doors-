@@ -10,73 +10,98 @@ import { CONTACT, SITE } from "@/lib/constants";
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * Signature hero — "the window opens".
+ * Signature hero — "the window opens". Audit-tuned v3.
  *
- * A pinned 300vh scroll sequence. The viewer starts inside a dark room,
- * looking at a closed Idealcombi-style glazed sash. As they scroll:
- *   1. the two sash panels swing open (3D rotateY on layered DOM panes)
- *   2. daylight floods in (light-wash + photo brightens, reflections sweep)
- *   3. the headline is revealed behind the glass, line by line
- *   4. background photo settles from 1.15 → 1.0 scale (parallax)
- *
- * Implemented entirely with transform/opacity layers (no WebGL), so the
- * identical cinematic sequence runs at 60fps on mobile — per the approved
- * performance strategy. Reduced-motion users get the final composed frame.
+ * Performance rules applied:
+ *  · TEXT IS NEVER HIDDEN IN MARKUP. All hide states are applied by GSAP at
+ *    init, so slow JS / lite devices / no JS always show readable text.
+ *  · No CSS `filter` animation (full-screen brightness() forced repaints —
+ *    the main scroll-lag source). Brightness is now a cheap opacity overlay.
+ *  · No backdrop-filter anywhere.
+ *  · Desktop (fine pointer): pinned scroll-scrub, shortened to 140%.
+ *  · Touch: one short autoplay intro (no pin, no scrub, native scroll).
+ *  · Low-power touch & reduced-motion: static final frame, zero animation.
  */
 export default function Hero() {
   const root = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced || !root.current) return;
+    if (!root.current) return;
+    const mm = gsap.matchMedia();
 
-    const ctx = gsap.context(() => {
+    // Helper: put the stage into its "closed window" start state.
+    const setStart = () => {
+      gsap.set(".room-shade", { opacity: 0.65 });
+      gsap.set(".hero-photo", { scale: 1.12 });
+      gsap.set(".hero-line > span", { yPercent: 110 });
+      gsap.set([".hero-sub", ".hero-ctas"], { opacity: 0, y: 20 });
+    };
+
+    // ── Desktop: scroll-driven ──────────────────────────────────────
+    mm.add("(pointer: fine) and (prefers-reduced-motion: no-preference)", () => {
+      setStart();
       const tl = gsap.timeline({
+        defaults: { ease: "none", force3D: true },
         scrollTrigger: {
           trigger: root.current,
           start: "top top",
-          end: "+=220%",
-          scrub: 0.6,
+          end: "+=140%",
+          scrub: true,
           pin: ".hero-stage",
           anticipatePin: 1,
         },
-        defaults: { ease: "none" },
       });
+      tl.to(".hero-photo", { scale: 1, duration: 1 }, 0)
+        .to(".room-shade", { opacity: 0, duration: 0.7 }, 0.15)
+        .to(".sash-left", { rotateY: -78, duration: 0.85 }, 0.05)
+        .to(".sash-right", { rotateY: 78, duration: 0.85 }, 0.05)
+        .fromTo(".sash-sheen", { xPercent: -120 }, { xPercent: 120, duration: 0.8 }, 0.1)
+        .to(".light-wash", { opacity: 1, duration: 0.6 }, 0.25)
+        .to(".hero-line > span", { yPercent: 0, duration: 0.5, stagger: 0.08, ease: "power3.out" }, 0.4)
+        .to(".hero-sub", { opacity: 1, y: 0, duration: 0.4 }, 0.65)
+        .to(".hero-ctas", { opacity: 1, y: 0, duration: 0.4 }, 0.75)
+        .to(".window-frame", { opacity: 0, duration: 0.5 }, 0.55)
+        .to(".scroll-cue", { opacity: 0, duration: 0.2 }, 0.1);
+    });
 
-      // Background photo: slow settle + brighten as light enters
-      tl.fromTo(".hero-photo", { scale: 1.18, filter: "brightness(0.45) saturate(0.8)" },
-        { scale: 1.0, filter: "brightness(1) saturate(1)", duration: 1 }, 0);
+    // ── Touch (capable): short autoplay intro ───────────────────────
+    mm.add("(pointer: coarse) and (prefers-reduced-motion: no-preference)", () => {
+      const cores = navigator.hardwareConcurrency ?? 4;
+      if (cores <= 4) {
+        // Low-power: static final frame, fully readable, zero animation.
+        gsap.set([".sash-left", ".sash-right"], { rotateY: (i: number) => (i === 0 ? -78 : 78) });
+        gsap.set([".room-shade", ".window-frame", ".scroll-cue"], { opacity: 0 });
+        gsap.set(".light-wash", { opacity: 1 });
+        return;
+      }
+      setStart();
+      const tl = gsap.timeline({ defaults: { ease: "power2.inOut", force3D: true }, delay: 0.3 });
+      tl.to(".hero-photo", { scale: 1, duration: 2 }, 0)
+        .to(".sash-left", { rotateY: -78, duration: 1.5 }, 0.15)
+        .to(".sash-right", { rotateY: 78, duration: 1.5 }, 0.15)
+        .to(".room-shade", { opacity: 0, duration: 1 }, 0.4)
+        .to(".light-wash", { opacity: 1, duration: 0.8 }, 0.5)
+        .to(".window-frame", { opacity: 0, duration: 0.6 }, 0.8)
+        .to(".hero-line > span", { yPercent: 0, duration: 0.6, stagger: 0.09, ease: "power3.out" }, 0.7)
+        .to(".hero-sub", { opacity: 1, y: 0, duration: 0.5 }, 1.15)
+        .to(".hero-ctas", { opacity: 1, y: 0, duration: 0.5 }, 1.3);
+    });
 
-      // Sash panels swing open
-      tl.to(".sash-left", { rotateY: -78, duration: 0.85 }, 0.05);
-      tl.to(".sash-right", { rotateY: 78, duration: 0.85 }, 0.05);
+    // ── Reduced motion: static final frame ──────────────────────────
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      gsap.set([".sash-left", ".sash-right"], { rotateY: (i: number) => (i === 0 ? -78 : 78) });
+      gsap.set([".room-shade", ".window-frame", ".scroll-cue"], { opacity: 0 });
+      gsap.set(".light-wash", { opacity: 1 });
+    });
 
-      // Glass reflection sheen travels across each pane as it moves
-      tl.fromTo(".sash-sheen", { xPercent: -120 }, { xPercent: 120, duration: 0.8 }, 0.1);
-
-      // Light wash pours through the opening
-      tl.fromTo(".light-wash", { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0.25);
-      tl.to(".room-shade", { opacity: 0, duration: 0.7 }, 0.2);
-
-      // Headline lines rise from behind the frame
-      tl.fromTo(".hero-line > span", { yPercent: 110 },
-        { yPercent: 0, duration: 0.5, stagger: 0.08, ease: "power3.out" }, 0.45);
-      tl.fromTo(".hero-sub", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4 }, 0.7);
-      tl.fromTo(".hero-ctas", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4 }, 0.8);
-
-      // Frame border drifts outward (multi-layer parallax depth)
-      tl.to(".window-frame", { scale: 1.06, opacity: 0.0, duration: 0.6 }, 0.55);
-      tl.to(".scroll-cue", { opacity: 0, duration: 0.2 }, 0.1);
-    }, root);
-
-    return () => ctx.revert();
+    return () => mm.revert();
   }, []);
 
   return (
     <section ref={root} className="relative" aria-label="Introduction">
       <div className="hero-stage relative h-svh overflow-hidden bg-ink">
 
-        {/* ── Layer 1: project photo (the world outside) ─────────── */}
+        {/* Layer 1: photo (no filter animation — audit fix) */}
         <div className="hero-photo absolute inset-0 will-change-transform">
           <Image
             src="/images/projects/crittall-style-new-build.jpg"
@@ -86,38 +111,34 @@ export default function Hero() {
           <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/25 to-ink/40" />
         </div>
 
-        {/* ── Layer 2: dark interior shade, fades as light enters ─── */}
-        <div className="room-shade pointer-events-none absolute inset-0 bg-ink/65" />
+        {/* Layer 2: dimmer overlay (replaces brightness filter) */}
+        <div className="room-shade pointer-events-none absolute inset-0 bg-ink opacity-0" />
 
-        {/* ── Layer 3: light wash pouring through the opening ─────── */}
+        {/* Layer 3: light wash */}
         <div
           className="light-wash pointer-events-none absolute inset-0 opacity-0"
           style={{
             background:
-              "radial-gradient(120% 90% at 50% 30%, rgba(201,174,130,0.22) 0%, rgba(201,174,130,0.06) 45%, transparent 70%)",
+              "radial-gradient(120% 90% at 50% 30%, rgba(201,174,130,0.20) 0%, rgba(201,174,130,0.05) 45%, transparent 70%)",
           }}
         />
 
-        {/* ── Layer 4: the opening sash (two glazed panels) ────────── */}
+        {/* Layer 4: sash panels */}
         <div className="pointer-events-none absolute inset-0 flex" style={{ perspective: "1400px" }}>
-          <div
-            className="sash-left relative h-full w-1/2 origin-left will-change-transform border-r border-white/10"
-            style={{ transformStyle: "preserve-3d" }}
-          >
+          <div className="sash-left relative h-full w-1/2 origin-left will-change-transform border-r border-white/10"
+            style={{ transformStyle: "preserve-3d" }}>
             <Pane />
           </div>
-          <div
-            className="sash-right relative h-full w-1/2 origin-right will-change-transform border-l border-white/10"
-            style={{ transformStyle: "preserve-3d" }}
-          >
+          <div className="sash-right relative h-full w-1/2 origin-right will-change-transform border-l border-white/10"
+            style={{ transformStyle: "preserve-3d" }}>
             <Pane />
           </div>
         </div>
 
-        {/* ── Layer 5: outer window frame ──────────────────────────── */}
-        <div className="window-frame pointer-events-none absolute inset-4 md:inset-8 border border-white/20 will-change-transform" />
+        {/* Layer 5: outer frame */}
+        <div className="window-frame pointer-events-none absolute inset-4 md:inset-8 border border-white/20" />
 
-        {/* ── Layer 6: content ─────────────────────────────────────── */}
+        {/* Layer 6: content — visible by default, GSAP applies hide states */}
         <div className="relative z-10 flex h-full items-end pb-28 md:items-center md:pb-0">
           <div className="mx-auto w-full max-w-wrap px-5 md:px-8">
             <p className="eyebrow mb-5">Idealcombi · Dublin &amp; surrounding areas</p>
@@ -141,8 +162,8 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── Scroll cue ───────────────────────────────────────────── */}
-        <div className="scroll-cue absolute bottom-20 md:bottom-8 left-1/2 z-10 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50">
+        {/* Scroll cue (desktop only) */}
+        <div className="scroll-cue absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 text-white/50 md:flex">
           <span className="text-[10px] uppercase tracking-eyebrow">Scroll to open</span>
           <span className="block h-8 w-px bg-gradient-to-b from-bronze to-transparent" />
         </div>
@@ -151,21 +172,17 @@ export default function Hero() {
   );
 }
 
-/** One glazed sash panel: tinted glass, mullions, travelling reflection. */
+/** Glazed sash panel — no backdrop-filter (audit fix). */
 function Pane() {
   return (
-    <div className="absolute inset-0 overflow-hidden backdrop-blur-[2px] bg-white/[0.04]">
-      {/* glass tint + edge highlight */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.07] to-transparent" />
-      {/* mullion grid (echoes the Idealcombi glazing bars in the photo) */}
-      <div className="absolute inset-0 grid grid-cols-2 grid-rows-3">
-        {Array.from({ length: 6 }).map((_, i) => (
+    <div className="absolute inset-0 overflow-hidden bg-white/[0.05]">
+      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] to-transparent" />
+      <div className="absolute inset-0 grid grid-cols-2 grid-rows-2">
+        {Array.from({ length: 4 }).map((_, i) => (
           <div key={i} className="border border-white/[0.10]" />
         ))}
       </div>
-      {/* travelling reflection */}
       <div className="sash-sheen sheen absolute inset-y-0 -left-1/3 w-2/3 will-change-transform" />
-      {/* sash frame */}
       <div className="absolute inset-0 border-[6px] border-charcoal/90" />
     </div>
   );

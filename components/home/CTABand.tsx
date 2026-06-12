@@ -5,17 +5,20 @@ import Image from "next/image";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import Button from "@/components/ui/Button";
 import { CONTACT } from "@/lib/constants";
+import { useLiteMode } from "@/hooks/useLiteMode";
 
-/** Full-width charcoal conversion band with photo parallax. */
+/** Conversion band — parallax on capable desktops only (audit fix). */
 export default function CTABand() {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
+  const lite = useLiteMode();
+  const parallax = lite === false && !reduced;
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], reduced ? ["0%", "0%"] : ["-12%", "12%"]);
+  const y = useTransform(scrollYProgress, [0, 1], parallax ? ["-10%", "10%"] : ["0%", "0%"]);
 
   return (
     <section ref={ref} className="relative overflow-hidden py-28 md:py-44">
-      <motion.div style={{ y }} className="absolute inset-[-14%] will-change-transform">
+      <motion.div style={{ y }} className={parallax ? "absolute inset-[-12%] will-change-transform" : "absolute inset-0"}>
         <Image
           src="/images/projects/corner-glazing-stone-extension.jpg"
           alt="" aria-hidden fill sizes="100vw" className="object-cover"

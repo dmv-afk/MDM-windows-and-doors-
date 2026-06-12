@@ -12,7 +12,7 @@ export default function ProductTeaser() {
           <SectionHeading
             eyebrow="Idealcombi · Futura+"
             title="Danish engineering. Irish homes."
-            intro="We install Idealcombi window and door systems — including the Futura+ range — manufactured in Denmark and known for their quality."
+            intro="Idealcombi is a premium European window and door manufacturer. We install Idealcombi products — including the Futura+ range — because of their quality, energy efficiency, durability, and contemporary design."
           />
           <ul className="mt-8 space-y-3 text-sm text-white/65">
             <li className="flex gap-3"><span className="text-bronze">—</span> High-quality Danish-manufactured window systems</li>

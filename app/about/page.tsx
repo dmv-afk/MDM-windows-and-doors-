@@ -3,13 +3,14 @@ import { buildMetadata } from "@/lib/seo";
 import SectionHeading from "@/components/ui/SectionHeading";
 import RevealImage from "@/components/ui/RevealImage";
 import Reveal from "@/components/ui/Reveal";
+import Reviews from "@/components/home/Reviews";
 import CTABand from "@/components/home/CTABand";
 import { PLACEHOLDER, SITE } from "@/lib/constants";
 
 export const metadata: Metadata = buildMetadata({
   title: "About Us",
   description:
-    "MDM Windows & Doors installs premium Idealcombi windows and doors across Dublin and surrounding areas.",
+    "MDM Windows & Doors specialises in the supply and installation of premium Idealcombi windows and doors for residential and commercial properties across Dublin and surrounding areas.",
   path: "/about",
 });
 
@@ -22,14 +23,23 @@ export default function AboutPage() {
             <SectionHeading
               eyebrow="About"
               title="Precision is the whole point."
-              intro={`MDM Windows & Doors installs premium Idealcombi windows and doors across ${SITE.area}.`}
+              intro="MDM Windows & Doors specialises in the supply and installation of premium windows and doors for residential and commercial properties."
             />
-            <Reveal delay={0.1} className="mt-10 space-y-6 text-sm leading-relaxed text-white/60">
-              <p className="border-l-2 border-bronze/40 pl-5 italic text-white/40">
-                Company story, team and background — {PLACEHOLDER}
+            <Reveal delay={0.1} className="mt-10 space-y-6 text-sm leading-relaxed text-white/65">
+              <p>
+                We focus on quality workmanship, attention to detail, and professional installation
+                standards. We install high-quality Idealcombi products, known for their modern design,
+                energy efficiency, durability, and performance.
+              </p>
+              <p>
+                Our goal is to help homeowners and businesses improve comfort, appearance, security,
+                and energy efficiency through expertly installed windows and doors.
               </p>
               <p className="border-l-2 border-bronze/40 pl-5 italic text-white/40">
-                Experience, qualifications and accreditations — {PLACEHOLDER}
+                Company experience — {PLACEHOLDER}
+              </p>
+              <p className="border-l-2 border-bronze/40 pl-5 italic text-white/40">
+                Certifications — {PLACEHOLDER}
               </p>
             </Reveal>
           </div>
@@ -44,7 +54,14 @@ export default function AboutPage() {
 
       <section className="border-t border-line py-20 md:py-28 bg-charcoal">
         <div className="mx-auto max-w-wrap px-5 md:px-8">
-          <SectionHeading eyebrow="What we stand on" title="The facts." />
+          <SectionHeading eyebrow="Why Idealcombi" title="A premium European manufacturer." />
+          <Reveal delay={0.1} className="mt-8 max-w-2xl">
+            <p className="text-sm md:text-base leading-relaxed text-white/65">
+              Idealcombi is a premium European window and door manufacturer. MDM Windows &amp; Doors
+              installs Idealcombi products because of their quality, energy efficiency, durability,
+              and contemporary design.
+            </p>
+          </Reveal>
           <div className="mt-12 grid gap-px bg-line border border-line sm:grid-cols-3">
             {[
               { k: "Products", v: "Idealcombi Futura+ window & door systems" },
@@ -60,6 +77,7 @@ export default function AboutPage() {
         </div>
       </section>
 
+      <Reviews />
       <CTABand />
     </>
   );

@@ -18,10 +18,9 @@ export default function MasonryGrid() {
           <motion.button
             key={img.src}
             onClick={() => setActive(i)}
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.7, delay: (i % 3) * 0.07, ease: [0.22, 1, 0.36, 1] }}
+            initial={false}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
             className="group relative mb-5 block w-full overflow-hidden hairline text-left"
             aria-label={`Open image: ${img.alt}`}
           >
